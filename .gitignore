@@ -1,0 +1,22 @@
+.runtime/
+node_modules/
+*.log
+.sandbox-probe.txt
+.env
+.env.*
+!.env.example
+*.tgz
+coverage/
+.DS_Store
+Thumbs.db
+
+# Private QA captures and downloaded research figures stay local.
+assets/*
+!assets/readme/
+assets/readme/*.mjs
+assets/readme/fonts/
+assets/readme/katex.css
+assets/readme/demo.html
+linear-attention/
+
+# The installable bundle in lib/ is deliberately committed for GitHub installs.

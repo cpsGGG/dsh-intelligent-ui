@@ -1,0 +1,12 @@
+import {createRequire} from 'node:module';
+import {mkdir,writeFile,copyFile,cp,readFile} from 'node:fs/promises';
+import {join,resolve} from 'node:path';
+const require=createRequire(import.meta.url),root=resolve(import.meta.dirname,'..');
+const deps=process.env.DSH_BUILD_DEPS;
+const esbuild=deps?require(join(deps,'esbuild')):require('esbuild');
+const out=join(root,'assets/qa');await mkdir(out,{recursive:true});
+await esbuild.build({entryPoints:[join(root,'tests/fixtures/visual-check.jsx')],outfile:join(out,'check.mjs'),bundle:true,format:'esm',platform:'browser',jsx:'automatic',loader:{'.css':'text'},nodePaths:deps?[deps]:[],alias:{'@deepseek-ai/dsh-client-ui-primitives':join(root,'tests/fixtures/native-markdown.jsx')}});
+await copyFile(join(root,'node_modules/katex/dist/katex.min.css'),join(out,'katex.css'));
+await cp(join(root,'node_modules/katex/dist/fonts'),join(out,'fonts'),{recursive:true});
+await writeFile(join(out,'index.html'),'<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>IUI 主题与复制验收</title><link rel="stylesheet" href="/assets/qa/katex.css"><div id="root"></div><script type="module" src="/assets/qa/check.mjs"></script></html>');
+console.log('Built visual check: /assets/qa/index.html');

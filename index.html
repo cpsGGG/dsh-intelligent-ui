@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="description" content="Intelligent UI：让 DeepSeek Harness 的回答更容易阅读。" />
+    <title>Intelligent UI · 阅读工作台</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='11' fill='%230b7965'/%3E%3Cpath d='M11 11h18v5H11zm0 9h13v3H11zm0 7h18v3H11z' fill='white'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="/app.mjs"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#reading-content">跳到回答</a>
+    <aside class="sidebar" aria-label="工作台导航">
+      <a href="/" class="brand" aria-label="Intelligent UI 首页">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>intelligent ui<span class="brand-caption">让答案更好读</span></span>
+      </a>
+      <div class="nav-current"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h7v15H4zM14 5h6v6h-6zM14 14h6v6h-6z" /></svg>阅读工作台</div>
+      <p class="sidebar-label">换一份回答试试</p>
+      <nav id="examples" class="examples" aria-label="示例回答"></nav>
+      <button id="open-editor" class="paste-button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5H5v16h14V5h-4M9 3h6v5H9zM8 12h8M8 16h5" /></svg>粘贴自己的回答</button>
+      <div class="sidebar-bottom">
+        <div class="connection"><span aria-hidden="true"></span>本地阅读原型</div>
+        <p>先体验呈现方式。<br />尚未接入 DSH 会话。</p>
+        <a href="/docs/dsh-integration.md" target="_blank" rel="noopener">查看 DSH 接入方案 <span aria-hidden="true">↗</span></a>
+      </div>
+    </aside>
+    <div class="main-shell">
+      <header class="topbar">
+        <div class="breadcrumb">Intelligent UI <span aria-hidden="true">/</span> <strong>阅读工作台</strong></div>
+        <div class="topbar-actions">
+          <span class="prototype-label">体验原型 v0.1</span>
+          <button id="font-toggle" class="quiet-button" aria-pressed="false" title="切换为更大的阅读字号"><span class="font-icon" aria-hidden="true">Aa</span><span>舒适字号</span></button>
+        </div>
+      </header>
+      <main id="reading-content" tabindex="-1">
+        <div class="intro">
+          <div class="intro-heading"><span class="small-mark" aria-hidden="true">≋</span><h1>把回答，变得好读。</h1></div>
+          <p>先看懂重点，再按需要展开。让信息有合适的形状。</p>
+        </div>
+        <section class="workspace" aria-label="回答阅读体验">
+          <div class="reading-toolbar">
+            <div class="view-tabs" role="group" aria-label="呈现方式">
+              <button id="rich-tab" class="active" aria-pressed="true"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m10 2 1.8 5.4L17 9l-5.2 1.7L10 16l-1.8-5.3L3 9l5.2-1.6z" /></svg>智能阅读</button>
+              <button id="raw-tab" aria-pressed="false">原始文本</button>
+            </div>
+            <button id="compare-toggle" class="quiet-button" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="3" width="16" height="14" rx="2"/><path d="M10 3v14" /></svg>对比原文</button>
+          </div>
+          <div id="editor-region" class="editor-region" hidden>
+            <div class="editor-header"><label for="source-input">粘贴一段 AI 回答</label><button id="close-editor" class="text-button">收起</button></div>
+            <p id="editor-hint">支持普通文字、Markdown 表格，以及示例中的流程和数据块。只在本机处理，不调用模型。</p>
+            <textarea id="source-input" rows="10" spellcheck="false" aria-describedby="editor-hint" placeholder="把读起来费力的回答放在这里……"></textarea>
+            <div class="editor-footer"><span id="input-error" role="alert"></span><button id="render-button" class="primary-button">整理为阅读视图 <span aria-hidden="true">→</span></button></div>
+          </div>
+          <div class="question"><span class="question-avatar" aria-hidden="true">你</span><p id="question-text"></p><span class="sample-label" id="sample-label">示例回答</span></div>
+          <div id="reading-layout" class="reading-layout">
+            <section id="original-panel" class="original-panel" aria-label="原始文本" hidden><div class="panel-label">同一份原文</div><pre id="original-text"></pre></section>
+            <div id="answer-panel" class="answer-panel">
+              <div class="answer-byline"><span class="answer-mark" aria-hidden="true">≋</span><strong>Intelligent UI</strong><span>阅读视图</span></div>
+              <div id="answer" class="answer"></div>
+              <div class="answer-footer"><button id="copy-button" class="quiet-button"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="6" y="6" width="11" height="12" rx="2"/><path d="M13 6V2H2v11h4" /></svg>复制原文</button><span>呈现可以改变，原文始终保留。</span></div>
+            </div>
+            <aside id="outline-panel" class="outline" aria-label="回答目录"><p>这份回答里</p><nav id="outline"></nav><div class="reading-note">少一点寻找，<br />多一点理解。</div></aside>
+          </div>
+          <div class="workspace-footnote" id="render-note">示例中的结构已预先编写；当前原型不使用模型推理或网页搜索。</div>
+        </section>
+        <footer class="page-footer"><span>为 DeepSeek Harness 探索更舒服的回答方式</span><span>内容结构 × 视觉呈现</span></footer>
+      </main>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  </body>
+</html>

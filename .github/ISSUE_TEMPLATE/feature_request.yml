@@ -1,0 +1,16 @@
+name: Feature request / 功能建议
+description: Describe the reading or interaction problem you want to solve.
+title: '[Feature] '
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem / 使用场景
+      description: What are you trying to understand or do, and what is difficult today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior / 希望的效果
+      description: A small example question or sketch helps. Avoid private data.

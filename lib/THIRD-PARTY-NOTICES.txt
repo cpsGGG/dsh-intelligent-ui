@@ -1,0 +1,18 @@
+Original dsh-intelligent-ui code is licensed under MIT (see ../LICENSE).
+Bundled third-party code remains under its respective license:
+
+elkjs 0.11.0 — Eclipse Public License 2.0
+Copyright its contributors. Full license: ELK-LICENSE.md
+Unmodified source: https://github.com/kieler/elkjs/tree/v0.11.0
+
+html-to-image 1.11.13 — MIT
+Copyright (c) 2017-2025 W.Y. Full license: HTML-TO-IMAGE-LICENSE.txt
+Source: https://github.com/bubkoo/html-to-image
+
+@deepseek-ai/schemastery 3.18.4 — MIT
+Full license: SCHEMASTERY-LICENSE.txt
+Source: https://github.com/deepseek-ai/deepseek-harness/tree/master/vendor/schemastery
+
+@deepseek-ai/cosmokit 1.8.6 — MIT
+Full license: COSMOKIT-LICENSE.txt
+Source: https://github.com/deepseek-ai/deepseek-harness/tree/master/vendor/cosmokit
